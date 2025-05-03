@@ -8,7 +8,6 @@ class ClaudeCode < Formula
   homepage "https://www.anthropic.com"
   url "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-0.2.100.tgz"
   version "0.2.100"
-  sha1 "844e341f636f779e696bc0db285bc7bfe57842a1"
   license "MIT"
 
   depends_on "node"

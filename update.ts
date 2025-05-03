@@ -11,7 +11,6 @@ class ClaudeCode < Formula
   homepage "https://www.anthropic.com"
   url "{{INSTALL_URL}}"
   version "{{VERSION}}"
-  sha1 "{{INSTALL_CHECKSUM}}"
   license "MIT"
 
   depends_on "node"
@@ -36,11 +35,9 @@ async function writeCurrentVersion(version: string) {
 
 async function writeNewFormula(args: {
   installUrl: string;
-  installChecksum: string;
   version: string;
 }) {
   const formula = FORMULA_TEMPLATE.replaceAll("{{VERSION}}", args.version)
-    .replaceAll("{{INSTALL_CHECKSUM}}", args.installChecksum)
     .replaceAll("{{INSTALL_URL}}", args.installUrl);
 
   await Deno.writeTextFile("claude-code.rb", formula);
@@ -60,15 +57,13 @@ async function main() {
   console.log("Detect new version:" + newVersion);
 
   const installUrl = json.dist.tarball;
-  const installChecksum = json.dist.shasum;
 
-  if (!installUrl || !installChecksum) {
-    throw new Error("Failed to extract install URL or checksum");
+  if (!installUrl) {
+    throw new Error("Failed to extract install URL");
   }
 
   const options = {
     installUrl,
-    installChecksum,
     version: newVersion,
   };
   console.log("Write new formula: ", options);
