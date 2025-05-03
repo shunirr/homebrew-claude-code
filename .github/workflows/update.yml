@@ -1,0 +1,28 @@
+name: update dnsproxy.rb when new release is available
+on:
+  schedule:
+    - cron: '0 0 * * *' # every day at 00:00 UTC
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - run: |
+          deno run --allow-net --allow-write --allow-read update.ts
+      - run: |
+          if [[ ! -z "$(git status -s)" ]]; then
+            git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "github-actions[bot]"
+            git add dnsproxy.rb
+            git add current-version
+            git commit -m "Bump to $(cat current-version)"
+            git push
+            git tag "$(cat current-version)"
+            git push --tags
+          fi
