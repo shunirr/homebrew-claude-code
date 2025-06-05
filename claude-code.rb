@@ -6,14 +6,14 @@ require "language/node"
 class ClaudeCode < Formula
   desc "Command line interface for Claude AI by Anthropic"
   homepage "https://www.anthropic.com"
-  url "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-1.0.10.tgz"
-  version "1.0.10"
+  url "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-1.0.11.tgz"
+  version "1.0.11"
   license "MIT"
 
   depends_on "node"
 
   def install
-    system "npm", "install", "-g", "--prefix", prefix, "@anthropic-ai/claude-code@1.0.10"
+    system "npm", "install", "-g", "--prefix", prefix, "@anthropic-ai/claude-code@1.0.11"
   end
 
   test do
